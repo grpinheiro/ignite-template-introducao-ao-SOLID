@@ -1,0 +1,349 @@
+{
+    "openapi":"3.0.0",
+    "info":{
+        "title":"Atlas",
+        "description":"Essa é uma documentação sobre a Atlas API.",
+        "version":"1.0.0",
+        "contact":{
+            "email":"gabriel.pinheiro@grdev.com.br"
+        }
+    },
+    "paths":{
+        "/users":{
+            "post":{
+                "tags":["users"],
+                "summary":"Criar um novo usuário",
+                "requestBody":{
+                    "content":{
+                        "application/json":{
+                            "schema":{
+                                "type":"object",
+                                "properties":{
+                                    "name":{
+                                        "type":"string"
+                                    },
+                                    "email":{
+                                        "type":"string"
+                                    }
+                                },
+                                "example":{
+                                    "name":"Gabriel Rosa Pinheiro",
+                                    "email":"gabriel.pinheiro1995@gmail.com"
+
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses":{
+                    "201":{
+                        "description":"Operação realizada com sucesso",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "properties":{
+                                        "id":{
+                                            "type":"string"
+                                        },
+                                        "admin":{
+                                            "type":"boolean"
+                                        },
+                                        "name":{
+                                            "type":"string"
+                                        },
+                                        "email":{
+                                            "type":"string"
+                                        },
+                                        "created_at":{
+                                            "type":"date"
+                                        },
+                                        "updated_at":{
+                                            "type":"date"
+                                        }
+                                    },
+                                    "example":{                                        
+                                        "id": "0762f18d-a40e-4a40-8b3f-d1e61ac0c10c",
+                                        "admin": false,
+                                        "name": "Teste",
+                                        "email": "gabriel.pinheiro@wambrasil.com",
+                                        "created_at": "2021-06-01T01:22:12.285Z",
+                                        "updated_at": "2021-06-01T01:22:12.285Z"
+                                    }  
+                                    
+                                }
+                            }
+                        }
+                    },
+                    "400":{
+                        "description":"E-mail já existente",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "properties":{
+                                        "error":{
+                                            "type":"string"
+                                        }
+                                    },
+                                    "example":{                                        
+                                        "error":"This email is already in use."
+                                    }  
+                                    
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "get":{
+                "tags":["users"],
+                "summary":"Retornar todos os usuários",
+                "parameters":[
+                    {
+                        "name":"user_id",
+                        "in":"header",
+                        "required":true,
+                        "schema":{
+                            "type":"string($uuid)"
+                        }
+                    }
+                ],
+                "responses":{
+                    "200":{
+                        "description":"Sucess",
+                        "content": {
+                            "application/json":{
+                                "schema":{
+                                    "type":"array",
+                                    "properties":[{
+                                        "id":{
+                                            "type":"string"
+                                        },
+                                        "admin":{
+                                            "type":"boolean"
+                                        },
+                                        "name":{
+                                            "type":"string"
+                                        },
+                                        "email":{
+                                            "type":"string"
+                                        },
+                                        "created_at":{
+                                            "type":"date"
+                                        },
+                                        "updated_at":{
+                                            "type":"date"
+                                        }
+                                    },
+                                    {
+                                        "id":{
+                                            "type":"string"
+                                        },
+                                        "admin":{
+                                            "type":"boolean"
+                                        },
+                                        "name":{
+                                            "type":"string"
+                                        },
+                                        "email":{
+                                            "type":"string"
+                                        },
+                                        "created_at":{
+                                            "type":"date"
+                                        },
+                                        "updated_at":{
+                                            "type":"date"
+                                        }
+                                    }],
+                                    "example":[{
+                                        "id": "0762f18d-a40e-4a40-8b3f-d1e61ac0c10c",
+                                        "admin": true,
+                                        "name": "Teste",
+                                        "email": "gabriel.pinheiro@wambrasil.com",
+                                        "created_at": "2021-06-01T01:22:12.285Z",
+                                        "updated_at": "2021-06-01T01:22:12.285Z"
+                                    },
+                                    {
+                                        "id": "3f040630-3efd-42eb-9211-c2213a574c8e",
+                                        "admin": false,
+                                        "name": "Teste2",
+                                        "email": "leandro.pinheiro@wambrasil.com",
+                                        "created_at": "2021-06-02T01:52:52.774Z",
+                                        "updated_at": "2021-06-02T01:52:52.774Z"
+                                    }]                                                                                                                                                                                             
+                                }
+                            }
+                        }
+                    },
+                    "400":{
+                        "description":"Error",
+                        "content": {
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                        "properties":{
+                                            "id":{
+                                                "type":"string"
+                                            }
+                                        },
+                                        "example":{
+                                            "error": "You need to be an administrator to list all users."
+                                        }                                                                                                                                                                                                    
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "/users/{user_id}":{
+                "get":{
+                    "tags":["users"],
+                    "summary":"Retornar todos os usuários",
+                    "parameters":[
+                        {
+                            "name":"user_id",
+                            "in":"params",
+                            "description":"ID do Usuário",
+                            "required":true
+                        }
+                    ],
+                    "responses":{
+                        "200":{
+                            "description":"Operação realizada com sucesso",
+                            "content": {
+                                "application/json":{
+                                    "schema":{
+                                        "type":"array",
+                                        "properties":{
+                                            "id":{
+                                                "type":"string"
+                                            },
+                                            "admin":{
+                                                "type":"boolean"
+                                            },
+                                            "name":{
+                                                "type":"string"
+                                            },
+                                            "email":{
+                                                "type":"string"
+                                            },
+                                            "created_at":{
+                                                "type":"date"
+                                            },
+                                            "updated_at":{
+                                                "type":"date"
+                                            }
+                                        },
+                                        "example":{
+                                            "id": "0762f18d-a40e-4a40-8b3f-d1e61ac0c10c",
+                                            "admin": true,
+                                            "name": "Teste",
+                                            "email": "gabriel.pinheiro@wambrasil.com",
+                                            "created_at": "2021-06-01T01:22:12.285Z",
+                                            "updated_at": "2021-06-01T01:22:12.285Z"
+                                        }                                                                                                                                                                                                                               
+                                    }
+                                }
+                            }
+                        },
+                        "400":{
+                            "description":"Usuário não encontrado",
+                            "content": {
+                                "application/json":{
+                                    "schema":{
+                                        "type":"object",
+                                            "properties":{
+                                                "id":{
+                                                    "type":"string"
+                                                }
+                                            },
+                                            "example":{
+                                                "error": "User not found."
+                                            }                                                                                                                                                                                                    
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                
+            "/users/{user_id}/admin":{
+                "patch":{
+                    "tags":["users"],
+                    "summary":"Tornar admin um usuário",
+                    "parameters":[
+                        {
+                            "name":"user_id",
+                            "in":"path",
+                            "required":true,
+                            "schema":{
+                            "type":"string($uuid)"
+                        }
+                        }
+                    ],
+                    "responses":{
+                        "200":{
+                            "description":"Operação realizada com sucesso",
+                            "content": {
+                                "application/json":{
+                                    "schema":{
+                                        "type":"array",
+                                        "properties":{
+                                            "id":{
+                                                "type":"string"
+                                            },
+                                            "admin":{
+                                                "type":"boolean"
+                                            },
+                                            "name":{
+                                                "type":"string"
+                                            },
+                                            "email":{
+                                                "type":"string"
+                                            },
+                                            "created_at":{
+                                                "type":"date"
+                                            },
+                                            "updated_at":{
+                                                "type":"date"
+                                            }
+                                        },
+                                        "example":{
+                                            "id": "0762f18d-a40e-4a40-8b3f-d1e61ac0c10c",
+                                            "admin": true,
+                                            "name": "Teste",
+                                            "email": "gabriel.pinheiro@wambrasil.com",
+                                            "created_at": "2021-06-01T01:22:12.285Z",
+                                            "updated_at": "2021-06-01T01:22:12.285Z"
+                                        }                                                                                                                                                                                                                               
+                                    }
+                                }
+                            }
+                        },
+                        "400":{
+                            "description":"Usuário não encontrado",
+                            "content": {
+                                "application/json":{
+                                    "schema":{
+                                        "type":"object",
+                                            "properties":{
+                                                "id":{
+                                                    "type":"string"
+                                                }
+                                            },
+                                            "example":{
+                                                "error": "User not found."
+                                            }                                                                                                                                                                                                    
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+        }
+        
+}
